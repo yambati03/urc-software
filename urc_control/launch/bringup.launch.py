@@ -23,7 +23,7 @@ def generate_launch_description():
     robot_description = urdf_doc.toxml()
 
     robot_controller_config = os.path.join(get_package_share_directory(
-        'urc_hw_description'), 'config', 'test_hardware_controller_config.yaml')
+        'urc_hw_description'), 'config', 'urc_hw_config.yaml')
 
     return LaunchDescription([
         DeclareLaunchArgument('use_sim_time', default_value='false',

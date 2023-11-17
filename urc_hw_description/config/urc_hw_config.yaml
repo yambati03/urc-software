@@ -2,8 +2,14 @@ controller_manager:
   ros__parameters:
     update_rate: 60
 
-    imu_broadcaster:
+    imu_state_broadcaster:
       type: urc_controllers/IMUBroadcaster
+
+    bms_broadcaster:
+      type: urc_controllers/BMSBroadcaster
+
+    rover_drivetrain_controller:
+      type: diff_drive_controller/DiffDriveController
 
     status_light_controller:
       type: urc_controllers/StatusLightController

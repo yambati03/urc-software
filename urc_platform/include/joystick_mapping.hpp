@@ -1,0 +1,33 @@
+#ifndef JOYSTICK_MAPPING
+#define JOYSTICK_MAPPING
+
+enum Button
+{
+  A,
+  B,
+  X,
+  Y,
+  BACK,
+  GUIDE,
+  START,
+  LEFT_STICK,
+  RIGHT_STICK,
+  LB,
+  RB,
+  DPAD_UP,
+  DPAD_DOWN,
+  DPAD_LEFT,
+  DPAD_RIGHT
+};
+
+enum Axis
+{
+  LEFT_X,
+  LEFT_Y,
+  RIGHT_X,
+  RIGHT_Y,
+  TRIGGER_LEFT,
+  TRIGGER_RIGHT
+};
+
+#endif  // !JOYSTICK_MAPPING

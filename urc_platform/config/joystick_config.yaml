@@ -1,0 +1,13 @@
+driver_joy:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.05
+    autorepeat_rate: 60.0
+    coalesce_interval_ms: 20
+
+operator_joy:
+  ros__parameters:
+    device_id: 1
+    deadzone: 0.10
+    autorepeat_rate: 60.0
+    coalesce_interval_ms: 50
