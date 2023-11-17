@@ -8,6 +8,10 @@ def generate_launch_description():
     driver_joy_node = Node(
         package="joy",
         executable="joy_node",
+        remappings=(
+            ("/joy", "/driver/joy"),
+            ("/joy/set_feedback", "/driver/joy/set_feedback")
+        )
     )
 
     joystick_driver_node = Node(
@@ -19,7 +23,7 @@ def generate_launch_description():
                                      'joystick_config.yaml'])
         ],
         remappings=[
-            ("/joystick_driver/joy", "/joy"),
+            ("/joystick_driver/joy", "/driver/joy"),
         ]
     )
 

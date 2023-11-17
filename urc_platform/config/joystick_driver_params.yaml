@@ -3,10 +3,10 @@ joystick_driver:
     max_velocity: 4.0
     delta_velocity: 0.1
 
-    driver_joystick_topic: "/joy"
-    velocity_x_axis: 1
-    velocity_z_axis: 4
-    left_invert: True
-    right_invert: True
+    driver_joystick_topic: "/driver/joy"
+    driver_velocity_x_axis: 1
+    driver_velocity_z_axis: 4
+    driver_left_invert: True
+    driver_right_invert: True
 
-    drivetrain_topic: "rover_drivetrain/cmd_vel"
+    drivetrain_topic: "rover_drivetrain_controller/cmd_vel"

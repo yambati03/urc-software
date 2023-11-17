@@ -71,17 +71,15 @@ joystick_launch = IncludeLaunchDescription(
 
 
 def generate_launch_description():
-    # Get the launch configuration
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-
     return LaunchDescription([
         DeclareLaunchArgument('use_sim_time', default_value='false',
                               description='Use simulation (Gazebo) clock if true'),
         control_node,
-        rover_drivetrain_controller,
-        # imu_broadcaster_spawner,
+        # rover_drivetrain_controller,
+        # # imu_broadcaster_spawner,
         bms_broadcaster_spawner,
         status_light_controller,
 
-        joystick_launch
+        joystick_launch,
+        # joy_node
     ])

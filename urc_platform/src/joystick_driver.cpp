@@ -11,14 +11,27 @@ namespace joystick_driver
 
 JoystickDriver::JoystickDriver(const rclcpp::NodeOptions& options) : rclcpp::Node("joystick_driver", options)
 {
-  joy_subscriber = create_subscription<sensor_msgs::msg::Joy>(
-      "/joy", rclcpp::SystemDefaultsQoS(), [this](const sensor_msgs::msg::Joy msg) { JoyCallback(msg); });
+  declare_parameter("max_velocity", 4.0);
+  declare_parameter("delta_velocity", 0.1);
 
-  drivetrain_cmd_publisher =
-      create_publisher<geometry_msgs::msg::TwistStamped>("rover_drivetrain/cmd_vel", rclcpp::SystemDefaultsQoS());
-  max_velocity = 4.0;
-  velocity_axis = std::make_pair(1, 4);
-  invert_pair = std::make_pair(true, true);
+  declare_parameter("driver_joystick_topic", "/driver/joy");
+  declare_parameter("driver_velocity_x_axis", 1);
+  declare_parameter("driver_velocity_z_axis", 4);
+  declare_parameter("driver_left_invert", true);
+  declare_parameter("driver_right_invert", true);
+  declare_parameter("drivetrain_topic", "/rover_drivetrain_controller/cmd_vel");
+
+  joy_subscriber = create_subscription<sensor_msgs::msg::Joy>(
+      get_parameter("driver_joystick_topic").as_string(), rclcpp::SystemDefaultsQoS(),
+      [this](const sensor_msgs::msg::Joy msg) { JoyCallback(msg); });
+
+  drivetrain_cmd_publisher = create_publisher<geometry_msgs::msg::TwistStamped>(
+      get_parameter("drivetrain_topic").as_string(), rclcpp::SystemDefaultsQoS());
+  max_velocity = get_parameter("max_velocity").as_double();
+  velocity_axis = std::make_pair(get_parameter("driver_velocity_x_axis").as_int(),
+                                 get_parameter("driver_velocity_z_axis").as_int());
+  invert_pair =
+      std::make_pair(get_parameter("driver_left_invert").as_bool(), get_parameter("driver_right_invert").as_bool());
 }
 
 void JoystickDriver::JoyCallback(const sensor_msgs::msg::Joy& msg)
