@@ -178,10 +178,10 @@ def generate_launch_description():
                         load_arm_controller,
                         load_gripper_controller_left,
                         load_gripper_controller_right,
-                        load_drivetrain_controller,
-                        aruco_detector,
-                        aruco_location,
-                        joystick_launch
+                        # load_drivetrain_controller,
+                        # aruco_detector,
+                        # aruco_location,
+                        # joystick_launch
                     ],
                 )
             ),
