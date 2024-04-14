@@ -210,7 +210,9 @@ def generate_launch_description():
                             "/foxglove_bridge_launch.xml",
                         ]
                     ),
-                    launch_arguments={"port": "8765"}.items(),
+                    launch_arguments={
+                        "port": "8765"
+                    }.items(),
                 ),
                 enable_color,
                 gazebo,
