@@ -9,6 +9,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosbridge_server REQUIRED)
+find_package(sick_scan_xd REQUIRED)
 
 include_directories(
   include
@@ -24,6 +25,7 @@ set(dependencies
   rclcpp_components
   std_msgs
   rosbridge_server
+  sick_scan_xd
 )
 
 ament_target_dependencies(${PROJECT_NAME}
