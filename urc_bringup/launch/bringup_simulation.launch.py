@@ -5,6 +5,7 @@ from launch.actions import (
     IncludeLaunchDescription,
     SetEnvironmentVariable,
     RegisterEventHandler,
+    AppendEnvironmentVariable,
 )
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch.event_handlers import OnProcessStart, OnProcessExit
@@ -15,7 +16,7 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    pkg_gazebo_ros = get_package_share_directory("gazebo_ros")
+    pkg_ros_gz = get_package_share_directory("ros_gz_sim")
     pkg_urc_bringup = get_package_share_directory("urc_bringup")
     pkg_urc_gazebo = get_package_share_directory("urc_gazebo")
     pkg_leo_rover = get_package_share_directory("leo_description")
@@ -26,7 +27,8 @@ def generate_launch_description():
     controller_config_file_dir = os.path.join(
         pkg_urc_bringup, "config", "ros2_control_leo.yaml"
     )
-    world_path = os.path.join(pkg_urc_gazebo, "urdf/worlds/urc_world.world")
+    # world_path = os.path.join(pkg_urc_gazebo, "urdf/worlds/urc_world.world")
+    world_path = os.path.join(pkg_urc_gazebo, "worlds", "urc_world.world")
     use_sim_time = LaunchConfiguration("use_sim_time", default="true")
 
     xacro_file = os.path.join(pkg_leo_rover, "urdf/leo_sim.urdf.xacro")
@@ -36,21 +38,25 @@ def generate_launch_description():
     )
     robot_desc = robot_description_config.toxml()
 
+    set_env_gazebo_resources = AppendEnvironmentVariable(
+        "GZ_SIM_RESOURCE_PATH", os.path.join(pkg_urc_gazebo, "urdf")
+    )
+
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, "launch", "gazebo.launch.py"),
+            os.path.join(pkg_ros_gz, "launch", "gz_sim.launch.py"),
         ),
         launch_arguments={
-            "use_sim_time": "true",
-            "world": world_path,
+            "gz_args": ["-r -v4", world_path],
+            "on_exit_shutdown": "true",
         }.items(),
     )
 
     enable_color = SetEnvironmentVariable(name="RCUTILS_COLORIZED_OUTPUT", value="1")
 
     spawn_robot = Node(
-        package="gazebo_ros",
-        executable="spawn_entity.py",
+        package="ros_gz_sim",
+        executable="create",
         arguments=[
             "-entity",
             "walli",
@@ -100,11 +106,11 @@ def generate_launch_description():
         arguments=["-p", controller_config_file_dir, "rover_drivetrain_controller"],
     )
 
-    teleop_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [FindPackageShare("urc_bringup"), "/launch/teleop.launch.py"]
-        )
-    )
+    # teleop_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         [FindPackageShare("urc_bringup"), "/launch/teleop.launch.py"]
+    #     )
+    # )
 
     twist_mux_node = Node(
         package="urc_platform",
@@ -170,13 +176,14 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            set_env_gazebo_resources,
             RegisterEventHandler(
                 event_handler=OnProcessExit(
                     target_action=spawn_robot,
                     on_exit=[
                         load_joint_state_broadcaster,
                         load_drivetrain_controller,
-                        teleop_launch,
+                        # teleop_launch,
                     ],
                 )
             ),
