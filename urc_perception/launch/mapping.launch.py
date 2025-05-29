@@ -31,6 +31,6 @@ def generate_launch_description():
     return LaunchDescription(
         [
             traversability_mapping_node,
-            grid_map_visualization_node,
+            # grid_map_visualization_node,
         ]
     )

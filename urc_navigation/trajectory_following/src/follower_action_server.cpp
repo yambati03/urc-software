@@ -18,7 +18,7 @@ FollowerActionServer::FollowerActionServer(const rclcpp::NodeOptions & options)
   declare_parameter("odom_topic", "/odometry/filtered_global");
   declare_parameter("map_frame", "map");
   declare_parameter("goal_tolerance", 0.1);
-  declare_parameter("cmd_vel_stamped", false);
+  declare_parameter("cmd_vel_stamped", true);
   declare_parameter("lethal_cost_threshold", 50);
 
   tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
