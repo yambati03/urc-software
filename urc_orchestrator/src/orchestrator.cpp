@@ -52,13 +52,22 @@ void Orchestrator::result_callback(
         urc_msgs::action::FollowPath>::WrappedResult &result) {
   if (result.code == rclcpp_action::ResultCode::SUCCEEDED) {
     RCLCPP_INFO(this->get_logger(), "Action completed successfully!");
-    ongoing = false;
   } else if (result.code == rclcpp_action::ResultCode::ABORTED) {
     RCLCPP_ERROR(this->get_logger(), "Action was aborted!");
   } else if (result.code == rclcpp_action::ResultCode::CANCELED) {
     RCLCPP_WARN(this->get_logger(), "Action was canceled!");
   } else {
     RCLCPP_ERROR(this->get_logger(), "Unknown result code!");
+  }
+  if (result.result->error_code ==
+      urc_msgs::action::FollowPath::Result::SUCCESS) {
+    RCLCPP_INFO(this->get_logger(), "Path followed successfully!");
+    ongoing = false;
+  } else if (result.result->error_code ==
+             urc_msgs::action::FollowPath::Result::OBSTACLE_DETECTED) {
+    RCLCPP_WARN(this->get_logger(), "Obstacle detected while following path!");
+  } else {
+    RCLCPP_ERROR(this->get_logger(), "Failed to follow path!");
   }
 }
 
