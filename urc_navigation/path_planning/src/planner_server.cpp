@@ -26,6 +26,13 @@ PlannerServer::PlannerServer(const rclcpp::NodeOptions & options)
     "/costmap",
     rclcpp::SystemDefaultsQoS(),
     std::bind(&PlannerServer::handleCostmap, this, std::placeholders::_1));
+
+  current_costmap_.header.stamp = get_clock()->now();
+  current_costmap_.header.frame_id = "map";
+  current_costmap_.info.resolution = 0.1; // Default resolution
+  current_costmap_.info.width = 480; // Default width
+  current_costmap_.info.height = 480; // Default height
+  current_costmap_.data.resize(current_costmap_.info.width * current_costmap_.info.height, 0);
 }
 
 void PlannerServer::handleCostmap(const nav_msgs::msg::OccupancyGrid::SharedPtr msg)
