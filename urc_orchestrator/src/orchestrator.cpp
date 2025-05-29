@@ -31,7 +31,15 @@ Orchestrator::Orchestrator(const rclcpp::NodeOptions &options)
       std::bind(&Orchestrator::Loop, this, std::placeholders::_1));
 }
 
-void goal_response_callback(GoalHandleFollowPath::SharedPtr future) {}
+void Orchestrator::goal_response_callback(
+    const GoalHandleFollowPath::SharedPtr &goal_handle) {
+  if (!goal_handle) {
+    RCLCPP_ERROR(this->get_logger(), "Goal was rejected by the action server");
+    ongoing = false;
+  } else {
+    RCLCPP_INFO(this->get_logger(), "Goal accepted by the action server");
+  }
+}
 
 void Orchestrator::feedback_callback(
     rclcpp_action::ClientGoalHandle<urc_msgs::action::FollowPath>::SharedPtr,

@@ -26,7 +26,7 @@ private:
   bool ongoing;
   void Loop(const std_msgs::msg::Bool &msg);
 
-  void goal_response_callback(GoalHandleFollowPath::SharedPtr future);
+  void goal_response_callback(const GoalHandleFollowPath::SharedPtr & goal_handle);
 
   void feedback_callback(
       rclcpp_action::ClientGoalHandle<urc_msgs::action::FollowPath>::SharedPtr,
