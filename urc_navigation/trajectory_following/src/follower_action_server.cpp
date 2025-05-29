@@ -14,8 +14,8 @@ FollowerActionServer::FollowerActionServer(const rclcpp::NodeOptions & options)
 
   declare_parameter("lookahead_distance", 1.0);
   declare_parameter("desired_linear_velocity", 0.5);
-  declare_parameter("cmd_vel_topic", "/cmd_vel");
-  declare_parameter("odom_topic", "/odom");
+  declare_parameter("cmd_vel_topic", "/cmd_vel_autonomous");
+  declare_parameter("odom_topic", "/odometry/filtered_global");
   declare_parameter("map_frame", "map");
   declare_parameter("goal_tolerance", 0.1);
   declare_parameter("cmd_vel_stamped", false);

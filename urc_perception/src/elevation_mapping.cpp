@@ -18,7 +18,7 @@ ElevationMapping::ElevationMapping(const rclcpp::NodeOptions & options)
 {
   RCLCPP_INFO(this->get_logger(), "Mapping node has been started.");
 
-  declare_parameter("map_frame", "odom");
+  declare_parameter("map_frame", "map");
   declare_parameter("camera_frame", "camera_depth_frame");
   declare_parameter("depth_topic", "/depth_camera/points");
 

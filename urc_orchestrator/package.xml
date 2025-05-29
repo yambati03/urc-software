@@ -10,16 +10,13 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
   <depend>rclcpp_components</depend>
   <depend>urc_msgs</depend>
-  <depend>cv_bridge</depend>
-  <depend>libopencv-dev</depend>
-  <depend>image_transport</depend>
   <depend>std_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>diagnostic_updater</depend>
-  <depend>librealsense2</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

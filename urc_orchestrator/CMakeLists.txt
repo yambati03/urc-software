@@ -6,16 +6,13 @@ include(../cmake/default_settings.cmake)
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(urc_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(cv_bridge REQUIRED)
-find_package(image_transport REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_ros REQUIRED)
-find_package(tf2_geometry_msgs REQUIRED)
+find_package(pluginlib REQUIRED)
 
 
 include_directories(
@@ -29,13 +26,13 @@ add_library(${PROJECT_NAME} SHARED
 
 set(dependencies
   rclcpp
+  rclcpp_action
   rclcpp_components
   urc_msgs
   std_msgs
   sensor_msgs
-  cv_bridge
-  image_transport
   nav_msgs
+  pluginlib
 )
 
 ament_target_dependencies(${PROJECT_NAME}
@@ -47,13 +44,6 @@ rclcpp_components_register_node(
   ${PROJECT_NAME}
   PLUGIN "orchestrator::Orchestrator"
   EXECUTABLE ${PROJECT_NAME}_Orchestrator
-)
-
-# Install launch files.
-install(
-  DIRECTORY
-  launch
-  DESTINATION share/${PROJECT_NAME}/
 )
 
 # Install library
