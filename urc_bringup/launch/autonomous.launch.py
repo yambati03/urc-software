@@ -47,12 +47,6 @@ def generate_launch_description():
         )
     )
 
-    orchestrator_node = Node(
-        package="urc_orchestrator",
-        executable="urc_orchestrator_Orchestrator",
-        name="urc_orchestrator_Orchestrator",
-    )
-
     gps_imu_localizer_node = Node(
         package="urc_localization",
         name="gps_imu_localizer",
@@ -64,7 +58,6 @@ def generate_launch_description():
         [
             follower_server_node,
             planner_server_node,
-            orchestrator_node,
             sick_node,
             launch_traversability,
             gps_imu_localizer_node,
