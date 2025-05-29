@@ -63,6 +63,7 @@ void Orchestrator::Loop(const std_msgs::msg::Bool &msg) {
     while (ongoing) {
       // Create a request for the GeneratePlan service
       auto request = std::make_shared<urc_msgs::srv::GeneratePlan::Request>();
+      request->start = current_pose_;
       request->goal.pose.position.x = lat;
       request->goal.pose.position.y = lon;
 
